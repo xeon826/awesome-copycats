@@ -13,7 +13,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.dir 	    = "/etc/xdg/awesome/themes/default"
+theme.dir 	        = "/etc/xdg/awesome/themes/default"
 theme.font          = "Terminus 9"
 
 --theme.bg_normal     = "#222222"
