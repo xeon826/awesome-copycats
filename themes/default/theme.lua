@@ -9,11 +9,13 @@ local wibox 	   = require("wibox")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local themes_path = gfs.get_themes_dir()
+-- local themes_path = gfs.get_themes_dir()
+local themes_path = os.getenv("HOME") .. "/.config/awesome/themes/"
 
 local theme = {}
 
-theme.dir 	        = "/etc/xdg/awesome/themes/default"
+-- theme.dir 	        = "/etc/xdg/awesome/themes/default"
+theme.dir           = os.getenv("HOME") .. "/.config/awesome/themes/default"
 theme.font          = "Terminus 9"
 
 --theme.bg_normal     = "#222222"
@@ -31,16 +33,17 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.fg_normal                                 = "#DDDDFF"
-theme.fg_focus                                  = "#EA6F81"
+-- theme.fg_focus                                  = "#352cb0" -- decent color blue
+theme.fg_focus                                  = "#687bad"
 theme.fg_urgent                                 = "#CC9393"
 theme.bg_normal                                 = "#1A1A1A"
-theme.bg_focus                                  = "#313131"
-theme.bg_urgent                                 = "#1A1A1A"
+theme.bg_focus                                  = "#000000"
+theme.bg_urgent                                 = "#252245"
 theme.border_width                              = dpi(1)
 theme.border_normal                             = "#3F3F3F"
 theme.border_focus                              = "#7F7F7F"
 theme.border_marked                             = "#CC9393"
-theme.tasklist_bg_focus                         = "#1A1A1A"
+theme.tasklist_bg_focus                         = "#000000"
 
 
 theme.useless_gap   = dpi(0)
