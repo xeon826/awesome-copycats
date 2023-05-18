@@ -52,7 +52,7 @@ beautiful.init(string.format("%s/.config/awesome/themes/default/theme.lua", os.g
 
 -- This is used later as the default terminal and editor to run.
 -- terminal = "alacritty"
-terminal = "urxvt"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -276,7 +276,7 @@ globalkeys = gears.table.join(
         { description = "go back", group = "tag" }),
     awful.key({ altkey, "Control" }, "i",
         function()
-            awful.util.spawn("urxvt -title Music -e ncmpcpp")
+            awful.util.spawn("alacritty --title 'Music' -e ncmpcpp")
         end,
         { description = "ncmpcpp open", group = "widgets" }),
     awful.key({ altkey, "Control", "Shift" }, ".",
@@ -618,21 +618,20 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 do
     local cmds =
     {
---          "picom",
---          "davmail",
---          "keep-presence -s 600",
---          "xrandr --output HDMI-A-0 --left-of DisplayPort-1 --auto",
---          "teams",
---          "steam -silent",
---          "xkbset bo 40",
---          "xkbset exp =bo",
---          "thunderbird",
---          'urxvt -hold -e "irssi"',
---          "kdeconnect-indicator",
---          "indicator-sound-switcher",
---          "brave-browser",
--- 	 "codium",
---          "slack"
+         "picom",
+         "davmail",
+         "keep-presence -s 600",
+         "xrandr --output HDMI-A-0 --left-of DisplayPort-1 --auto",
+         "teams",
+         "steam -silent",
+         "xkbset bo 40",
+         "xkbset exp =bo",
+         "thunderbird",
+         'alacritty -e "irssi"',
+         "kdeconnect-indicator",
+         "indicator-sound-switcher",
+         "brave-browser",
+         "slack"
     }
 
     for _, i in pairs(cmds) do
