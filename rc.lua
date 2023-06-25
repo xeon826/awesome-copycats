@@ -620,17 +620,16 @@ do
     {
          "picom",
          "davmail",
-         "keep-presence -s 600",
-         "xrandr --output HDMI-A-0 --left-of DisplayPort-1 --auto",
+         "keep-presence -s 300",
+         "xrandr --output HDMI-1 --left-of DP-2 --auto",
          "teams",
-         "steam -silent",
-         "xkbset bo 40",
-         "xkbset exp =bo",
+         -- "steam -silent",
          "thunderbird",
          'alacritty -e "irssi"',
          "kdeconnect-indicator",
          "indicator-sound-switcher",
-         "brave-browser",
+         "qutebrowser",
+         -- "nordvpn connect",
          "slack"
     }
 
