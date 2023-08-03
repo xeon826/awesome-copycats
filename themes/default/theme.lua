@@ -33,8 +33,7 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.fg_normal                                 = "#DDDDFF"
--- theme.fg_focus                                  = "#352cb0" -- decent color blue
-theme.fg_focus                                  = "#687bad"
+theme.fg_focus                                  = "#6A95DF"
 theme.fg_urgent                                 = "#CC9393"
 theme.bg_normal                                 = "#1A1A1A"
 theme.bg_focus                                  = "#000000"

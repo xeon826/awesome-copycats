@@ -622,14 +622,13 @@ do
          "davmail",
          "keep-presence -s 300",
          "xrandr --output HDMI-1 --left-of DP-2 --auto",
+	 "docker-compose -f /home/dan/git_clones/nordlynx/docker-compose.yml up -d",
          "teams",
-         -- "steam -silent",
          "thunderbird",
          'alacritty -e "irssi"',
          "kdeconnect-indicator",
          "indicator-sound-switcher",
          "qutebrowser",
-         -- "nordvpn connect",
          "slack"
     }
 
