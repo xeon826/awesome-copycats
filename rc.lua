@@ -2,6 +2,7 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+local lain = require("lain")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -18,6 +19,8 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local os = os
+
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -272,6 +275,11 @@ globalkeys = gears.table.join(
         { description = "view previous", group = "tag" }),
     awful.key({ modkey, }, "Right", awful.tag.viewnext,
         { description = "view next", group = "tag" }),
+    -- Non-empty tag browsing
+    awful.key({ altkey }, "Left", function() lain.util.tag_view_nonempty(-1) end,
+        { description = "view  previous nonempty", group = "tag" }),
+    awful.key({ altkey }, "Right", function() lain.util.tag_view_nonempty(1) end,
+        { description = "view  next nonempty", group = "tag" }),
     awful.key({ modkey, }, "Escape", awful.tag.history.restore,
         { description = "go back", group = "tag" }),
     awful.key({ altkey, "Control" }, "i",
@@ -617,20 +625,22 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+--
 do
     local cmds =
     {
-         "picom",
-         "davmail",
-         "keep-presence -s 300",
-	 "docker-compose -f /home/dan/git_clones/nordlynx/docker-compose.yml up -d",
-         "teams",
-         "thunderbird",
-         'alacritty -e "irssi"',
-         "kdeconnect-indicator",
-         "indicator-sound-switcher",
-         "qutebrowser",
-         "slack"
+         -- "nitrogen --restore",
+         -- "picom",
+         -- "davmail",
+         -- "keep-presence -s 300",
+	 -- "docker-compose -f /home/dan/git_clones/nordlynx/docker-compose.yml up -d",
+         -- "teams",
+         -- "thunderbird",
+         -- 'alacritty -e "irssi"',
+         -- "kdeconnect-indicator",
+         -- "indicator-sound-switcher",
+         -- "qutebrowser",
+         -- "slack"
     }
 
     for _, i in pairs(cmds) do
