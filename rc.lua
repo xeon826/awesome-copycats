@@ -413,7 +413,7 @@ clientkeys = gears.table.join(
         { description = "move to master", group = "client" }),
     awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
         { description = "move to screen", group = "client" }),
-    awful.key({ modkey, "Shift"}, "o", function(c) c:move_to_screen(c.screen.index-1) end,
+    awful.key({ modkey, "Control"}, "o", function(c) c:move_to_screen(c.screen.index-1) end,
         { description = "move to screen", group = "client" }),
     awful.key({ modkey, }, "t", function(c) c.ontop = not c.ontop end,
         { description = "toggle keep on top", group = "client" }),
@@ -629,18 +629,18 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 do
     local cmds =
     {
-         -- "nitrogen --restore",
-         -- "picom",
-         -- "davmail",
-         -- "keep-presence -s 300",
-	 -- "docker-compose -f /home/dan/git_clones/nordlynx/docker-compose.yml up -d",
-         -- "teams",
-         -- "thunderbird",
-         -- 'alacritty -e "irssi"',
-         -- "kdeconnect-indicator",
-         -- "indicator-sound-switcher",
-         -- "qutebrowser",
-         -- "slack"
+         "nitrogen --restore",
+         "picom",
+         "davmail",
+         "keep-presence -s 300",
+	 "docker-compose -f /home/dan/git_clones/nordlynx/docker-compose.yml up -d",
+         "teams",
+         "thunderbird",
+         'alacritty -e "irssi"',
+         "kdeconnect-indicator",
+         "indicator-sound-switcher",
+         "qutebrowser",
+         "slack"
     }
 
     for _, i in pairs(cmds) do
