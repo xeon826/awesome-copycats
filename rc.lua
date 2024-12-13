@@ -241,6 +241,9 @@ awful.screen.connect_for_each_screen(function(s)
 		end,
 	})
 
+	-- Check if the DESKTOP environment variable is set
+	local show_battery = os.getenv("DESKTOP") == nil
+
 	-- Add widgets to the wibox
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
@@ -255,7 +258,7 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
 			wibox.widget.systray(),
-			battery_widget,
+			show_battery and battery_widget or nil,
 			mytextclock,
 			s.mylayoutbox,
 		},
@@ -340,6 +343,9 @@ globalkeys = gears.table.join(
 	awful.key({ modkey }, "w", function()
 		mymainmenu:show()
 	end, { description = "show main menu", group = "awesome" }),
+	awful.key({ altkey, "Control" }, "s", function()
+		awful.spawn.with_shell("/usr/bin/kdeconnect-sms")
+	end, { description = "Open kdeconnect-sms", group = "widgets" }),
 	awful.key({ altkey, "Control" }, "i", function()
 		awful.spawn.with_shell("/home/dan/.cargo/bin/alacritty --title 'Music' -e /usr/bin/ncmpcpp")
 	end, { description = "ncmpcpp open", group = "widgets" }),
@@ -432,6 +438,14 @@ globalkeys = gears.table.join(
 )
 
 clientkeys = gears.table.join(
+	awful.key({}, "XF86AudioPlay", function()
+		awful.spawn.easy_async("pactl set-source-mute @DEFAULT_SOURCE@ toggle", function()
+			awful.spawn.easy_async_with_shell("pactl get-source-mute @DEFAULT_SOURCE@", function(stdout)
+				local mute = stdout:match("yes") and "Microphone Muted" or "Microphone Unmuted"
+				naughty.notify({ text = mute })
+			end)
+		end)
+	end, { description = "toggle microphone mute", group = "media" }),
 	awful.key({ modkey }, "f", function(c)
 		c.fullscreen = not c.fullscreen
 		c:raise()
@@ -665,6 +679,8 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
-for _, cmd in ipairs(cmds) do
-    awful.spawn(cmd)
+if not os.getenv("DONT_RUN_STARTUP") then
+	for _, cmd in ipairs(cmds) do
+		awful.spawn(cmd)
+	end
 end
