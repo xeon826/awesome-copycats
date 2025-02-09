@@ -2,6 +2,5 @@ rc.lua.save
 theme-personal.lua
 .luacheckrc
 wip/
-cmds.lua
 themes/default/*jpg
 themes/default/*png
