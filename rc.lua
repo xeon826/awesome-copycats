@@ -58,7 +58,7 @@ end
 beautiful.init(string.format("%s/.config/awesome/themes/default/theme.lua", os.getenv("HOME")))
 
 -- This is used later as the default terminal and editor to run.
-terminal = "/home/dan/.cargo/bin/alacritty"
+terminal = "/usr/local/bin/kitty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -193,6 +193,9 @@ awful.screen.connect_for_each_screen(function(s)
 	-- Wallpaper
 	set_wallpaper(s)
 
+	-- Drop-down terminal
+	s.quake = lain.util.quake()
+
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
@@ -279,6 +282,9 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 
+	awful.key({ modkey }, "z", function()
+		awful.screen.focused().quake:toggle()
+	end),
 	-- Increase volume with notification
 	awful.key({}, "XF86AudioRaiseVolume", function()
 		awful.spawn.easy_async("pactl set-sink-volume @DEFAULT_SINK@ +5%", function()
@@ -680,7 +686,7 @@ end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
 if not os.getenv("DONT_RUN_STARTUP") then
-	for _, cmd in ipairs(cmds) do
-		awful.spawn(cmd)
-	end
+	-- for _, cmd in ipairs(cmds) do
+	-- 	awful.spawn(cmd)
+	-- end
 end

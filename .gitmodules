@@ -1,6 +1,7 @@
 [submodule "lain"]
 	path = lain
-	url = https://github.com/lcpz/lain.git
+	url = https://github.com/xeon826/lain
+    branch=master
 
 [submodule "freedesktop"]
 	path = freedesktop
