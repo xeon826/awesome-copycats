@@ -131,6 +131,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
@@ -244,8 +246,16 @@ awful.screen.connect_for_each_screen(function(s)
 		end,
 	})
 
+	local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+
 	-- Check if the DESKTOP environment variable is set
 	local show_battery = os.getenv("DESKTOP") == nil
+	local open_weather_api_key = os.getenv("OPEN_WEATHER_API_KEY") == nil
+
+	local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
+	local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
+	local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
+	local weather_api_widget = require("awesome-wm-widgets.weather-api-widget.weather")
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -261,6 +271,15 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
 			wibox.widget.systray(),
+			weather_api_widget({
+				api_key = open_weather_api_key,
+				coordinates = { 45.5017, -73.5673 },
+			}),
+			docker_widget(),
+			mpdarc_widget,
+			fs_widget(),
+			ram_widget(),
+			cpu_widget(),
 			show_battery and battery_widget or nil,
 			mytextclock,
 			s.mylayoutbox,
