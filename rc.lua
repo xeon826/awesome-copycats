@@ -262,8 +262,8 @@ awful.screen.connect_for_each_screen(function(s)
 
 	local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
 	local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
-	local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
-	local weather_api_widget = require("awesome-wm-widgets.weather-api-widget.weather")
+	-- local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
+	local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -279,12 +279,20 @@ awful.screen.connect_for_each_screen(function(s)
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
 			wibox.widget.systray(),
-			weather_api_widget({
+			weather_widget({
 				api_key = open_weather_api_key,
-				coordinates = { 45.5017, -73.5673 },
+				coordinates = { 38.767, -90.4115 },
+				time_format_12h = true,
+				units = "imperial",
+				both_units_widget = true,
+				font_name = "Carter One",
+				icons = "VitalyGorbachev",
+				icons_extension = ".svg",
+				show_hourly_forecast = true,
+				show_daily_forecast = true,
 			}),
 			docker_widget(),
-			mpdarc_widget,
+			-- mpdarc_widget,
 			fs_widget(),
 			ram_widget(),
 			cpu_widget(),
@@ -714,7 +722,7 @@ end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
 if not os.getenv("DONT_RUN_STARTUP") then
-	-- for _, cmd in ipairs(cmds) do
-	-- 	awful.spawn(cmd)
-	-- end
+	for _, cmd in ipairs(cmds) do
+		awful.spawn(cmd)
+	end
 end
