@@ -196,7 +196,15 @@ awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
 
 	-- Drop-down terminal
-	s.quake = lain.util.quake()
+	s.quake = lain.util.quake({
+		app = terminal,
+		followtag = true,
+		height = 0.75,
+		width = 0.8,
+		vert = "center",
+		horiz = "center",
+		screen = s,
+	})
 
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -302,7 +310,8 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
 
 	awful.key({ modkey }, "z", function()
-		awful.screen.focused().quake:toggle()
+		local s = awful.screen.focused()
+		s.quake:toggle()
 	end),
 	-- Increase volume with notification
 	awful.key({}, "XF86AudioRaiseVolume", function()
