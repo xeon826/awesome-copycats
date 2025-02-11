@@ -131,7 +131,6 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
