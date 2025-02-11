@@ -250,7 +250,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 	-- Check if the DESKTOP environment variable is set
 	local show_battery = os.getenv("DESKTOP") == nil
-	local open_weather_api_key = os.getenv("OPEN_WEATHER_API_KEY")
+	local open_weather_api_key = os.getenv("OPENWEATHER_API_KEY")
 
 	local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
 	local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
