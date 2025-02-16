@@ -10,3 +10,4 @@
 [submodule "awesome-wm-widgets"]
 	path = awesome-wm-widgets
 	url = https://github.com/xeon826/awesome-wm-widgets/
+    branch=master
