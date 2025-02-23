@@ -257,7 +257,30 @@ awful.screen.connect_for_each_screen(function(s)
 	local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
 	-- Check if the DESKTOP environment variable is set
-	local show_battery = os.getenv("DESKTOP") == nil
+
+local function is_laptop()
+    local success, handle = pcall(io.popen, "ls /sys/class/power_supply/")
+    if not success then
+        return false -- If we can't check, assume it's not a laptop
+    end
+    
+    local success2, result = pcall(function() 
+        local r = handle:read("*a")
+        handle:close()
+        return r
+    end)
+    
+    if not success2 then
+        return false -- If we can't read, assume it's not a laptop
+    end
+
+    -- Check for common battery naming patterns
+    return result:match("BAT%d") ~= nil 
+        or result:match("battery") ~= nil
+        or result:match("Battery") ~= nil
+end
+
+  local show_battery = is_laptop()
 	local open_weather_api_key = os.getenv("OPENWEATHER_API_KEY")
 
 	local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
