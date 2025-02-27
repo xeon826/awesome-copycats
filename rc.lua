@@ -256,7 +256,6 @@ awful.screen.connect_for_each_screen(function(s)
 
 	local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
-	-- Check if the DESKTOP environment variable is set
 
 local function is_laptop()
     local success, handle = pcall(io.popen, "ls /sys/class/power_supply/")
