@@ -16,7 +16,7 @@ local theme = {}
 
 -- theme.dir 	        = "/etc/xdg/awesome/themes/default"
 theme.dir           = os.getenv("HOME") .. "/.config/awesome/themes/default"
-theme.font          = "Terminus 9"
+theme.font          = "Terminus 10"
 
 --theme.bg_normal     = "#222222"
 -- theme.bg_normal     = "#1A1A1A"
