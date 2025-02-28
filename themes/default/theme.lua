@@ -18,59 +18,28 @@ local theme = {}
 theme.dir           = os.getenv("HOME") .. "/.config/awesome/themes/default"
 theme.font          = "Terminus 10"
 
---theme.bg_normal     = "#222222"
--- theme.bg_normal     = "#1A1A1A"
--- theme.bg_focus      = "#535d6c"
---theme.bg_focus      = "#268AD1"
---theme.bg_focus      = "#000047"
--- theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
-theme.bg_systray    = theme.bg_normal
+theme.bg_minimize   = "#414868"  
+theme.bg_systray    = "#1a1b26"  
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#c0caf5"  
+theme.fg_focus      = "#c0caf5"  
+theme.fg_urgent     = "#f7768e"  
+theme.fg_minimize   = "#a9b1d6"  
 
-theme.fg_normal                                 = "#DDDDFF"
-theme.fg_focus                                  = "#6A95DF"
-theme.fg_urgent                                 = "#CC9393"
-theme.bg_normal                                 = "#1A1A1A"
-theme.bg_focus                                  = "#000000"
-theme.bg_urgent                                 = "#252245"
+theme.fg_normal                                 = "#c0caf5"  
+theme.fg_focus                                  = "#c0caf5"  
+theme.fg_urgent                                 = "#f7768e"  
+theme.bg_normal                                 = "#1a1b26"  
+theme.bg_focus                                  = "#283457"  
+theme.bg_urgent                                 = "#292e42"  
+theme.border_normal                             = "#292e42"  
+theme.border_focus                              = "#c0caf5"  
+theme.border_marked                             = "#f7768e"  
+theme.tasklist_bg_focus                         = "#283457"  
+
 theme.border_width                              = dpi(1)
-theme.border_normal                             = "#3F3F3F"
-theme.border_focus                              = "#7F7F7F"
-theme.border_marked                             = "#CC9393"
-theme.tasklist_bg_focus                         = "#000000"
-
-
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
--- theme.widget_cpu    = theme.dir .. "/icons/cpu.png"
-
---[[
-local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
-local cpu = lain.widget.cpu({
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
-    end
-})
---]]
-
-
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
