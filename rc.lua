@@ -748,3 +748,10 @@ if not os.getenv("DONT_RUN_STARTUP") then
 		awful.spawn(cmd)
 	end
 end
+collectgarbage("setpause", 160)
+collectgarbage("setstepmul", 400)
+
+gears.timer.start_new(10, function()
+  collectgarbage("step", 20000)
+  return true
+end)
