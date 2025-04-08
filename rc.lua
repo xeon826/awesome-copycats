@@ -257,65 +257,14 @@ awful.screen.connect_for_each_screen(function(s)
 	local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
 	local function is_laptop()
-		-- First check for laptop-specific indicators
-		local indicators = {
-			"/sys/class/dmi/id/chassis_type", -- Type 9 or 10 indicates laptop
-			"/proc/acpi/button/lid/LID0/state", -- Lid state only exists on laptops
-			"/proc/acpi/button/lid/LID/state", -- Alternative lid path
-		}
-
-		for _, path in ipairs(indicators) do
-			local success, handle = pcall(io.open, path, "r")
-			if success and handle then
-				handle:close()
-				return true
-			end
+		local home = os.getenv("HOME")
+		local file = io.open(home .. "/is_laptop", "r")
+		if file then
+			file:close()
+			return true
 		end
-
-		-- If no laptop indicators found, check specifically for main battery
-		local success, handle = pcall(io.popen, "ls /sys/class/power_supply/")
-		if not success then
-			return false
-		end
-
-		local success2, result = pcall(function()
-			local r = handle:read("*a")
-			handle:close()
-			return r
-		end)
-
-		if not success2 then
-			return false
-		end
-
-		-- Only look for main battery patterns, ignore other power supplies
-		local battery_patterns = {
-			"^BAT%d+$", -- Standard battery naming
-			"^CMB%d+$", -- Some ThinkPads use this
-			"^BATT$", -- Some systems use this
-			"^main_battery$", -- Some systems use this
-		}
-
-		for line in result:gmatch("[^\n]+") do
-			for _, pattern in ipairs(battery_patterns) do
-				if line:match(pattern) then
-					-- Additional check: verify it's a battery type device
-					local type_path = "/sys/class/power_supply/" .. line .. "/type"
-					local type_file = io.open(type_path, "r")
-					if type_file then
-						local device_type = type_file:read("*l")
-						type_file:close()
-						if device_type == "Battery" then
-							return true
-						end
-					end
-				end
-			end
-		end
-
 		return false
 	end
-
 	local show_battery = is_laptop()
 	local open_weather_api_key = os.getenv("OPENWEATHER_API_KEY")
 
