@@ -133,6 +133,38 @@ mytextclock = wibox.widget.textclock()
 
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
+-- Headset battery widget (moved outside screen loop)
+local headset_widget = wibox.widget.textbox()
+headset_widget:set_text("🎧 --")
+
+local function update_headset_battery()
+	awful.spawn.easy_async("/home/dan/.local/bin/headsetcontrol -b", function(stdout, stderr, reason, exit_code)
+		if exit_code == 0 and stdout and stdout ~= "" then
+			-- Try multiple patterns to match battery percentage
+			local battery_level = stdout:match("(%d+)%%") or 
+			                     stdout:match("Battery: (%d+)%%") or
+			                     stdout:match("(%d+)") -- Just any number
+			if battery_level then
+				headset_widget:set_text("🎧 " .. battery_level .. "%")
+			else
+				headset_widget:set_text("🎧 N/A")
+			end
+		else
+			headset_widget:set_text("🎧 --")
+		end
+	end)
+end
+
+-- Update headset battery every 3 minutes (180 seconds)
+gears.timer {
+	timeout = 180,
+	autostart = true,
+	callback = update_headset_battery
+}
+
+-- Initial update
+update_headset_battery()
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
@@ -273,6 +305,7 @@ awful.screen.connect_for_each_screen(function(s)
 	-- local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
 	local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 
+
 	-- Add widgets to the wibox
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
@@ -304,6 +337,7 @@ awful.screen.connect_for_each_screen(function(s)
 			fs_widget(),
 			ram_widget(),
 			cpu_widget(),
+			headset_widget,
 			show_battery and battery_widget or nil,
 			mytextclock,
 			s.mylayoutbox,
