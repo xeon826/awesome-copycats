@@ -157,7 +157,7 @@ end
 
 -- Update headset battery every 3 minutes (180 seconds)
 gears.timer {
-	timeout = 180,
+	timeout = 60,
 	autostart = true,
 	callback = update_headset_battery
 }
