@@ -805,10 +805,8 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
-if not os.getenv("DONT_RUN_STARTUP") then
-	for _, cmd in ipairs(cmds) do
-		awful.spawn(cmd)
-	end
+for _, cmd in ipairs(cmds) do
+  awful.spawn(cmd)
 end
 collectgarbage("setpause", 160)
 collectgarbage("setstepmul", 400)
