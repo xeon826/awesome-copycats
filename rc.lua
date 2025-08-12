@@ -165,6 +165,47 @@ gears.timer {
 -- Initial update
 update_headset_battery()
 
+-- DualSense controller battery widget
+local dualsense_widget = wibox.widget.textbox()
+dualsense_widget:set_text("🎮 --")
+
+local function update_dualsense_battery()
+	awful.spawn.easy_async("dualsensectl battery", function(stdout, stderr, reason, exit_code)
+		if exit_code == 0 and stdout and stdout ~= "" then
+			local output = stdout:gsub("%s+$", "") -- trim whitespace
+			if output:match("No device found") then
+				dualsense_widget:set_text("🎮 --")
+			else
+				-- Parse output like "95 discharging" or "95 charging"
+				local battery_level, status = output:match("(%d+)%s+(%w+)")
+				if battery_level then
+					local status_symbol = ""
+					if status == "charging" then
+						status_symbol = "⚡"
+					elseif status == "discharging" then
+						status_symbol = "🔋"
+					end
+					dualsense_widget:set_text("🎮 " .. battery_level .. "%" .. status_symbol)
+				else
+					dualsense_widget:set_text("🎮 N/A")
+				end
+			end
+		else
+			dualsense_widget:set_text("🎮 --")
+		end
+	end)
+end
+
+-- Update DualSense battery every 3 minutes (180 seconds)
+gears.timer {
+	timeout = 180,
+	autostart = true,
+	callback = update_dualsense_battery
+}
+
+-- Initial update
+update_dualsense_battery()
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
@@ -338,6 +379,7 @@ awful.screen.connect_for_each_screen(function(s)
 			ram_widget(),
 			cpu_widget(),
 			headset_widget,
+			dualsense_widget,
 			show_battery and battery_widget or nil,
 			mytextclock,
 			s.mylayoutbox,
@@ -763,15 +805,15 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
-if not os.getenv("DONT_RUN_STARTUP") then
-	for _, cmd in ipairs(cmds) do
-		awful.spawn(cmd)
-	end
-end
-collectgarbage("setpause", 160)
-collectgarbage("setstepmul", 400)
+-- if not os.getenv("DONT_RUN_STARTUP") then
+-- 	for _, cmd in ipairs(cmds) do
+-- 		awful.spawn(cmd)
+-- 	end
+-- end
+-- collectgarbage("setpause", 160)
+-- collectgarbage("setstepmul", 400)
 
-gears.timer.start_new(10, function()
-	collectgarbage("step", 20000)
-	return true
-end)
+-- gears.timer.start_new(10, function()
+-- 	collectgarbage("step", 20000)
+-- 	return true
+-- end)
