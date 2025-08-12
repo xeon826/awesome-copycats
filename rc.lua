@@ -378,8 +378,8 @@ awful.screen.connect_for_each_screen(function(s)
 			fs_widget(),
 			ram_widget(),
 			cpu_widget(),
-			headset_widget,
-			dualsense_widget,
+			wibox.container.margin(headset_widget, 3, 3, 0, 0),
+			wibox.container.margin(dualsense_widget, 3, 3, 0, 0),
 			show_battery and battery_widget or nil,
 			mytextclock,
 			s.mylayoutbox,
@@ -805,15 +805,15 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
--- if not os.getenv("DONT_RUN_STARTUP") then
--- 	for _, cmd in ipairs(cmds) do
--- 		awful.spawn(cmd)
--- 	end
--- end
--- collectgarbage("setpause", 160)
--- collectgarbage("setstepmul", 400)
+if not os.getenv("DONT_RUN_STARTUP") then
+	for _, cmd in ipairs(cmds) do
+		awful.spawn(cmd)
+	end
+end
+collectgarbage("setpause", 160)
+collectgarbage("setstepmul", 400)
 
--- gears.timer.start_new(10, function()
--- 	collectgarbage("step", 20000)
--- 	return true
--- end)
+gears.timer.start_new(10, function()
+	collectgarbage("step", 20000)
+	return true
+end)
