@@ -401,10 +401,10 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 
-	awful.key({ modkey }, "z", function()
-		local s = awful.screen.focused()
-		s.quake:toggle()
-	end),
+    awful.key({ modkey }, "z", function()
+        local s = awful.screen.focused()
+        s.quake:toggle()
+    end),
 	-- Increase volume with notification
 	awful.key({}, "XF86AudioRaiseVolume", function()
 		awful.spawn.easy_async("pactl set-sink-volume @DEFAULT_SINK@ +5%", function()
