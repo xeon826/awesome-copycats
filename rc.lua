@@ -805,13 +805,16 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
-for _, cmd in ipairs(cmds) do
-  awful.spawn(cmd)
-end
-collectgarbage("setpause", 160)
-collectgarbage("setstepmul", 400)
+if os.getenv("NESTED") ~= "true" then
+  for _, cmd in ipairs(cmds) do
+    awful.spawn(cmd)
+  end
+  collectgarbage("setpause", 160)
+  collectgarbage("setstepmul", 400)
 
-gears.timer.start_new(10, function()
-	collectgarbage("step", 20000)
-	return true
-end)
+  gears.timer.start_new(10, function()
+    collectgarbage("step", 20000)
+    return true
+  end)
+end
+
