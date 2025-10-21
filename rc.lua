@@ -141,9 +141,7 @@ local function update_headset_battery()
 	awful.spawn.easy_async("/home/dan/.local/bin/headsetcontrol -b", function(stdout, stderr, reason, exit_code)
 		if exit_code == 0 and stdout and stdout ~= "" then
 			-- Try multiple patterns to match battery percentage
-			local battery_level = stdout:match("(%d+)%%") or 
-			                     stdout:match("Battery: (%d+)%%") or
-			                     stdout:match("(%d+)") -- Just any number
+			local battery_level = stdout:match("(%d+)%%") or stdout:match("Battery: (%d+)%%") or stdout:match("(%d+)") -- Just any number
 			if battery_level then
 				headset_widget:set_text("🎧 " .. battery_level .. "%")
 			else
@@ -156,11 +154,11 @@ local function update_headset_battery()
 end
 
 -- Update headset battery every 3 minutes (180 seconds)
-gears.timer {
+gears.timer({
 	timeout = 60,
 	autostart = true,
-	callback = update_headset_battery
-}
+	callback = update_headset_battery,
+})
 
 -- Initial update
 update_headset_battery()
@@ -197,11 +195,11 @@ local function update_dualsense_battery()
 end
 
 -- Update DualSense battery every 3 minutes (180 seconds)
-gears.timer {
+gears.timer({
 	timeout = 180,
 	autostart = true,
-	callback = update_dualsense_battery
-}
+	callback = update_dualsense_battery,
+})
 
 -- Initial update
 update_dualsense_battery()
@@ -345,8 +343,7 @@ awful.screen.connect_for_each_screen(function(s)
 	local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
 	-- local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
 	local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
-  local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
-
+	local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -374,7 +371,7 @@ awful.screen.connect_for_each_screen(function(s)
 				show_hourly_forecast = true,
 				show_daily_forecast = true,
 			}),
-      mpdarc_widget,
+			mpdarc_widget,
 			docker_widget(),
 			-- mpdarc_widget,
 			fs_widget(),
@@ -403,10 +400,10 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 
-    awful.key({ modkey }, "z", function()
-        local s = awful.screen.focused()
-        s.quake:toggle()
-    end),
+	awful.key({ modkey }, "z", function()
+		local s = awful.screen.focused()
+		s.quake:toggle()
+	end),
 	-- Increase volume with notification
 	awful.key({}, "XF86AudioRaiseVolume", function()
 		awful.spawn.easy_async("pactl set-sink-volume @DEFAULT_SINK@ +5%", function()
@@ -436,7 +433,7 @@ globalkeys = gears.table.join(
 			end)
 		end)
 	end, { description = "mute/unmute volume", group = "media" }),
-	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
+	-- awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
 	awful.key({ modkey }, "Right", awful.tag.viewnext, { description = "view next", group = "tag" }),
 	awful.key({ modkey }, "Escape", awful.tag.history.restore, { description = "go back", group = "tag" }),
@@ -599,6 +596,9 @@ clientkeys = gears.table.join(
 	awful.key({ modkey }, "t", function(c)
 		c.ontop = not c.ontop
 	end, { description = "toggle keep on top", group = "client" }),
+	awful.key({ modkey }, "s", function(c)
+		c.sticky = not c.sticky
+	end, { description = "toggle sticky", group = "client" }),
 	awful.key({ modkey }, "n", function(c)
 		-- The client currently has the input focus, so it cannot be
 		-- minimized, since minimized clients can't have the focus.
@@ -807,16 +807,15 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
-if os.getenv("NESTED") ~= "true" then
-  for _, cmd in ipairs(cmds) do
-    awful.spawn(cmd)
-  end
-  collectgarbage("setpause", 160)
-  collectgarbage("setstepmul", 400)
+-- if os.getenv("NESTED") ~= "true" then
+--   for _, cmd in ipairs(cmds) do
+--     awful.spawn(cmd)
+--   end
+--   collectgarbage("setpause", 160)
+--   collectgarbage("setstepmul", 400)
 
-  gears.timer.start_new(10, function()
-    collectgarbage("step", 20000)
-    return true
-  end)
-end
-
+--   gears.timer.start_new(10, function()
+--     collectgarbage("step", 20000)
+--     return true
+--   end)
+-- end
