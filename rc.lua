@@ -138,17 +138,21 @@ local headset_widget = wibox.widget.textbox()
 headset_widget:set_text("🎧 --")
 
 local function update_headset_battery()
-    awful.spawn.easy_async_with_shell(
-        "/usr/bin/upower -i /org/freedesktop/UPower/devices/headphones_dev_20_AF_1B_10_B6_BC | grep 'percentage:'",
-        function(stdout, stderr, reason, exit_code)
-            local battery_level = stdout:match("percentage:%s*(%d+)%%")
-            if battery_level then
-                headset_widget:set_text("🎧 " .. battery_level .. "%")
-            else
-                headset_widget:set_text("🎧 N/A")
-            end
-        end
-    )
+	awful.spawn.easy_async("/home/dan/.local/bin/headsetcontrol -b", function(stdout, stderr, reason, exit_code)
+		if exit_code == 0 and stdout and stdout ~= "" then
+			-- Try multiple patterns to match battery percentage
+			local battery_level = stdout:match("(%d+)%%") or 
+			                     stdout:match("Battery: (%d+)%%") or
+			                     stdout:match("(%d+)") -- Just any number
+			if battery_level then
+				headset_widget:set_text("🎧 " .. battery_level .. "%")
+			else
+				headset_widget:set_text("🎧 N/A")
+			end
+		else
+			headset_widget:set_text("🎧 --")
+		end
+	end)
 end
 
 -- Update headset battery every 3 minutes (180 seconds)
@@ -341,6 +345,7 @@ awful.screen.connect_for_each_screen(function(s)
 	local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
 	-- local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
 	local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+  local mpdarc_widget = require("awesome-wm-widgets.mpdarc-widget.mpdarc")
 
 
 	-- Add widgets to the wibox
@@ -369,6 +374,7 @@ awful.screen.connect_for_each_screen(function(s)
 				show_hourly_forecast = true,
 				show_daily_forecast = true,
 			}),
+      mpdarc_widget,
 			docker_widget(),
 			-- mpdarc_widget,
 			fs_widget(),
