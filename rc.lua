@@ -436,6 +436,11 @@ globalkeys = gears.table.join(
 	-- awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
 	awful.key({ modkey }, "Right", awful.tag.viewnext, { description = "view next", group = "tag" }),
+
+  awful.key({ altkey }, "Left", function() lain.util.tag_view_nonempty(-1) end,
+      { description = "view  previous nonempty", group = "tag" }),
+  awful.key({ altkey }, "Right", function() lain.util.tag_view_nonempty(1) end,
+      { description = "view  previous nonempty", group = "tag" }),
 	awful.key({ modkey }, "Escape", awful.tag.history.restore, { description = "go back", group = "tag" }),
 
 	-- Increase brightness with notification
@@ -807,15 +812,15 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- Iterate over each command in the cmds table and spawn it
--- if os.getenv("NESTED") ~= "true" then
---   for _, cmd in ipairs(cmds) do
---     awful.spawn(cmd)
---   end
---   collectgarbage("setpause", 160)
---   collectgarbage("setstepmul", 400)
+if os.getenv("NESTED") ~= "true" then
+  for _, cmd in ipairs(cmds) do
+    awful.spawn(cmd)
+  end
+  collectgarbage("setpause", 160)
+  collectgarbage("setstepmul", 400)
 
---   gears.timer.start_new(10, function()
---     collectgarbage("step", 20000)
---     return true
---   end)
--- end
+  gears.timer.start_new(10, function()
+    collectgarbage("step", 20000)
+    return true
+  end)
+end
