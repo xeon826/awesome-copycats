@@ -18,28 +18,37 @@ local theme = {}
 theme.dir           = os.getenv("HOME") .. "/.config/awesome/themes/default"
 theme.font          = "Terminus 10"
 
-theme.bg_minimize   = "#414868"  
-theme.bg_systray    = "#1a1b26"  
+theme.bg_minimize   = "#393939"
+theme.bg_systray    = "#161616"
 
-theme.fg_normal     = "#c0caf5"  
-theme.fg_focus      = "#c0caf5"  
-theme.fg_urgent     = "#f7768e"  
-theme.fg_minimize   = "#a9b1d6"  
+theme.fg_normal     = "#dde1e6"
+theme.fg_focus      = "#ffffff"
+theme.fg_urgent     = "#ee5396"
+theme.fg_minimize   = "#f2f4f8"
 
-theme.fg_normal                                 = "#c0caf5"  
-theme.fg_focus                                  = "#c0caf5"  
-theme.fg_urgent                                 = "#f7768e"  
-theme.bg_normal                                 = "#1a1b26"  
-theme.bg_focus                                  = "#283457"  
-theme.bg_urgent                                 = "#292e42"  
-theme.border_normal                             = "#292e42"  
-theme.border_focus                              = "#c0caf5"  
-theme.border_marked                             = "#f7768e"  
-theme.tasklist_bg_focus                         = "#283457"  
+theme.fg_normal                                 = "#dde1e6"
+theme.fg_focus                                  = "#ffffff"
+theme.fg_urgent                                 = "#ee5396"
+theme.bg_normal                                 = "#161616"
+theme.bg_focus                                  = "#08bdba"
+theme.bg_urgent                                 = "#393939"
+theme.border_normal                             = "#393939"
+theme.border_focus                              = "#08bdba"
+theme.border_marked                             = "#ee5396"
+theme.tasklist_bg_focus                         = "#08bdba"
+theme.tasklist_fg_focus                         = "#000000"
+theme.tasklist_border_focus                     = "#ffffff"
 
-theme.border_width                              = dpi(1)
+-- Taglist colors for better contrast with focused background
+theme.taglist_bg_focus                          = "#08bdba"
+theme.taglist_fg_focus                          = "#000000"
+theme.taglist_bg_urgent                         = "#ee5396"
+theme.taglist_fg_urgent                         = "#000000"
+theme.taglist_bg_normal                         = "#161616"
+theme.taglist_fg_normal                         = "#dde1e6"  
+
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(1)
+theme.border_width  = dpi(3)
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
